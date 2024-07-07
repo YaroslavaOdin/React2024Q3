@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Main from "./components/search-input/Main.tsx";
+import Main from "./components/main/Main.tsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
