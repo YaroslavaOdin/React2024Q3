@@ -1,10 +1,11 @@
 import { Component, ReactNode } from "react";
-import "./Main.css";
+import "./Search.css";
 
 interface DefaultState {
   searchQuery: string;
   result: [];
   loading: boolean;
+  hasError: boolean;
 }
 
 interface Character {
@@ -19,7 +20,7 @@ interface Result {
   characters: [];
 }
 
-class Main extends Component {
+class Search extends Component {
   constructor(props: []) {
     super(props);
 
@@ -30,6 +31,7 @@ class Main extends Component {
     };
 
     this.fetchData = this.fetchData.bind(this);
+    this.throwNewError = this.throwNewError.bind(this);
   }
 
   public async componentDidMount(): Promise<void> {
@@ -68,8 +70,18 @@ class Main extends Component {
     }
   }
 
+  private throwNewError(): void {
+    this.setState({ hasError: true });
+  }
+
   public render(): ReactNode {
-    const { searchQuery, result, loading } = this.state as DefaultState;
+    const { searchQuery, result, loading, hasError } = this
+      .state as DefaultState;
+
+    if (hasError) {
+      throw new Error("Something went wrong.");
+    }
+
     const listItems = (result as unknown as Result)?.characters?.map(
       (person: Character) => (
         <div key={person.uid} className="card">
@@ -87,6 +99,15 @@ class Main extends Component {
 
     return (
       <div>
+        <button
+          className="error-btn"
+          onClick={() => {
+            this.throwNewError();
+          }}
+        >
+          Test error
+        </button>
+
         <div className="title">Search for Star Trek characters</div>
         <div className="search-container">
           <div className="input">
@@ -115,4 +136,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Search;
