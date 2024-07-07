@@ -24,7 +24,7 @@ class Main extends Component {
     super(props);
 
     this.state = {
-      searchQuery: "",
+      searchQuery: localStorage.searchQuery ? localStorage.searchQuery : "",
       result: [],
       loading: true,
     };
@@ -37,8 +37,13 @@ class Main extends Component {
     await this.fetchData(searchQuery);
   }
 
+  private setToLocaleStorage(search: string): void {
+    localStorage.setItem("searchQuery", search);
+  }
+
   private async fetchData(searchQuery: string): Promise<void> {
     this.setState({ loading: true });
+    this.setToLocaleStorage(searchQuery);
 
     if (searchQuery) {
       const requestOptions = {
