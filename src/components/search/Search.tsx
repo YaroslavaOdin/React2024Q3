@@ -58,13 +58,13 @@ class Search extends Component {
       };
 
       await fetch(
-        "https://stapi.co/api/v1/rest/character/search?pageNumber=1",
+        "https://stapi.co/api/v1/rest/character/search",
         requestOptions,
       )
         .then((response) => response.json())
         .then((result) => this.setState({ result: result, loading: false }));
     } else {
-      await fetch("https://stapi.co/api/v1/rest/character/search?pageNumber=1")
+      await fetch("https://stapi.co/api/v1/rest/character/search?pageNumber=0")
         .then((response) => response.json())
         .then((result) => this.setState({ result: result, loading: false }));
     }
