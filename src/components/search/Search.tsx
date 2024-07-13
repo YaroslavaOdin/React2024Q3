@@ -6,9 +6,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DetailedCard from "../detailed-card/DetailedCard";
 import { getIdFromPath, getSearchData } from "../../utils/utils";
 import Pagination from "../pagination/Pagination";
+import { LocalStorage } from "../../utils/local-storage";
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(
+    LocalStorage().getItem(),
+  );
   const [result, setResult] = useState<Character[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -41,6 +44,7 @@ const Search = () => {
 
   const fetchData = async (page: number) => {
     setLoading(true);
+    LocalStorage().setItem(searchQuery);
 
     const result = await getSearchData(searchQuery, page);
 
