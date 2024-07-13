@@ -4,7 +4,8 @@ import Card from "../card-list/Card";
 import { Character } from "../../utils/model";
 import { useLocation, useNavigate } from "react-router-dom";
 import DetailedCard from "../detailed-card/DetailedCard";
-import { getIdFromPath } from "../../utils/utils";
+import { getIdFromPath, getSearchData } from "../../utils/utils";
+import Pagination from "../pagination/Pagination";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -12,17 +13,16 @@ const Search = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState(false);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const navigate = useNavigate();
 
   const location = useLocation();
   const [pathname, setPathname] = useState(location.pathname);
 
-  const setToLocaleStorage = (search: string) => {
-    localStorage.setItem("searchQuery", search);
-  };
-
   useEffect(() => {
-    fetchData();
+    fetchData(0);
   }, []);
 
   useEffect(() => {
@@ -32,43 +32,41 @@ const Search = () => {
   }, [pathname]);
 
   useEffect(() => {
+    fetchData(page);
+  }, [page]);
+
+  useEffect(() => {
     setPathname(location.pathname);
   }, [location.pathname]);
 
-  const fetchData = async () => {
+  const fetchData = async (page: number) => {
     setLoading(true);
-    setToLocaleStorage(searchQuery);
 
-    const url = "https://stapi.co/api/v1/rest/character/search";
+    const result = await getSearchData(searchQuery, page);
 
-    if (searchQuery) {
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          accept: "application/json",
-        },
-        body: `name=${searchQuery}`,
-      };
-
-      await fetch(url, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          setResult(result.characters);
-          setLoading(false);
-        });
-    } else {
-      await fetch(`${url}?pageNumber=0`)
-        .then((response) => response.json())
-        .then((result) => {
-          setResult(result.characters);
-          setLoading(false);
-        });
-    }
+    setResult(result.characters);
+    setTotalPages(result.totalPages);
+    setPage(page);
+    setLoading(false);
   };
 
   const throwNewError = () => {
     setHasError(true);
+  };
+
+  const handleNextPageClick = async () => {
+    const current = page;
+    const next = current + 1;
+    const total = totalPages;
+
+    setPage(next < total ? next : current);
+  };
+
+  const handlePrevPageClick = () => {
+    const current = page;
+    const prev = current - 1;
+
+    setPage(prev >= 0 ? prev : current);
   };
 
   if (hasError) {
@@ -79,7 +77,7 @@ const Search = () => {
     if (!openDetails) return;
     setOpenDetails(false);
 
-    navigate("/");
+    navigate(`/`);
   };
 
   return (
@@ -98,7 +96,7 @@ const Search = () => {
             placeholder="Start search..."
           />
 
-          <button className="btn" onClick={() => fetchData()}>
+          <button className="btn" onClick={() => fetchData(0)}>
             Search
           </button>
         </div>
@@ -109,10 +107,27 @@ const Search = () => {
       ) : (
         <div className="cards-container">
           <div className="results" onClick={closeDetails}>
-            <div className="cards-list">
-              {result?.map((person) => <Card results={person}></Card>)}
-            </div>
+            {result && result?.length === 0 && (
+              <div className="not-found-page"> No Results </div>
+            )}
+
+            {result && result?.length > 0 && (
+              <div>
+                <div className="cards-list">
+                  {result?.map((person) => <Card results={person}></Card>)}
+                </div>
+
+                <div className="pagination">
+                  <Pagination
+                    onNextPageClick={handleNextPageClick}
+                    onPrevPageClick={handlePrevPageClick}
+                    nav={{ current: page, total: totalPages }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
+
           {openDetails && (
             <DetailedCard
               name={getIdFromPath(pathname)}

@@ -9,3 +9,8 @@ export interface Character {
   placeOfBirth: string;
   maritalStatus: string;
 }
+
+export interface Result {
+  characters: Character[];
+  totalPages: number;
+}

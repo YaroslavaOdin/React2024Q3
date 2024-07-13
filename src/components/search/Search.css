@@ -86,3 +86,12 @@ button {
 .card_info {
   display: block;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
