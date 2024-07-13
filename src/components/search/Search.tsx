@@ -1,51 +1,45 @@
-import { Component, ReactNode } from "react";
 import "./Search.css";
+import { useEffect, useState } from "react";
+import Card from "../card-list/Card";
+import { Character } from "../../utils/model";
+import { useLocation, useNavigate } from "react-router-dom";
+import DetailedCard from "../detailed-card/DetailedCard";
+import { getIdFromPath } from "../../utils/utils";
 
-interface DefaultState {
-  searchQuery: string;
-  result: [];
-  loading: boolean;
-  hasError: boolean;
-}
+const Search = () => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [result, setResult] = useState<Character[]>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [openDetails, setOpenDetails] = useState(false);
+  const navigate = useNavigate();
 
-interface Character {
-  uid: number;
-  name: string;
-  gender: string;
-  yearOfBirth: number;
-  yearOfDeath: number;
-}
+  const location = useLocation();
+  const [pathname, setPathname] = useState(location.pathname);
 
-interface Result {
-  characters: [];
-}
-
-class Search extends Component {
-  constructor(props: []) {
-    super(props);
-
-    this.state = {
-      searchQuery: localStorage.searchQuery ? localStorage.searchQuery : "",
-      result: [],
-      loading: true,
-    };
-
-    this.fetchData = this.fetchData.bind(this);
-    this.throwNewError = this.throwNewError.bind(this);
-  }
-
-  public async componentDidMount(): Promise<void> {
-    const { searchQuery } = this.state as DefaultState;
-    await this.fetchData(searchQuery);
-  }
-
-  private setToLocaleStorage(search: string): void {
+  const setToLocaleStorage = (search: string) => {
     localStorage.setItem("searchQuery", search);
-  }
+  };
 
-  private async fetchData(searchQuery: string): Promise<void> {
-    this.setState({ loading: true });
-    this.setToLocaleStorage(searchQuery);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (getIdFromPath(pathname) !== "/") {
+      setOpenDetails(true);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, [location.pathname]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setToLocaleStorage(searchQuery);
+
+    const url = "https://stapi.co/api/v1/rest/character/search";
 
     if (searchQuery) {
       const requestOptions = {
@@ -57,83 +51,78 @@ class Search extends Component {
         body: `name=${searchQuery}`,
       };
 
-      await fetch(
-        "https://stapi.co/api/v1/rest/character/search",
-        requestOptions,
-      )
+      await fetch(url, requestOptions)
         .then((response) => response.json())
-        .then((result) => this.setState({ result: result, loading: false }));
+        .then((result) => {
+          setResult(result.characters);
+          setLoading(false);
+        });
     } else {
-      await fetch("https://stapi.co/api/v1/rest/character/search?pageNumber=0")
+      await fetch(`${url}?pageNumber=0`)
         .then((response) => response.json())
-        .then((result) => this.setState({ result: result, loading: false }));
+        .then((result) => {
+          setResult(result.characters);
+          setLoading(false);
+        });
     }
+  };
+
+  const throwNewError = () => {
+    setHasError(true);
+  };
+
+  if (hasError) {
+    throw new Error("Something went wrong.");
   }
 
-  private throwNewError(): void {
-    this.setState({ hasError: true });
-  }
+  const closeDetails = () => {
+    if (!openDetails) return;
+    setOpenDetails(false);
 
-  public render(): ReactNode {
-    const { searchQuery, result, loading, hasError } = this
-      .state as DefaultState;
+    navigate("/");
+  };
 
-    if (hasError) {
-      throw new Error("Something went wrong.");
-    }
+  return (
+    <div>
+      <button className="error-btn" onClick={throwNewError}>
+        Test error
+      </button>
 
-    const listItems = (result as unknown as Result)?.characters?.map(
-      (person: Character) => (
-        <div key={person.uid} className="card">
-          <b className="card_info">{person.name}</b>
-          <span className="card_info">Gender : {person.gender}</span>
-          <span className="card_info">
-            Year of birth : {person.yearOfBirth}
-          </span>
-          <span className="card_info">
-            Year of death : {person.yearOfDeath}
-          </span>
+      <div className="title">Search for Star Trek characters</div>
+      <div className="search-container">
+        <div className="input">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Start search..."
+          />
+
+          <button className="btn" onClick={() => fetchData()}>
+            Search
+          </button>
         </div>
-      ),
-    );
-
-    return (
-      <div>
-        <button
-          className="error-btn"
-          onClick={() => {
-            this.throwNewError();
-          }}
-        >
-          Test error
-        </button>
-
-        <div className="title">Search for Star Trek characters</div>
-        <div className="search-container">
-          <div className="input">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(event) =>
-                this.setState({ searchQuery: event.target.value })
-              }
-              placeholder="Start search..."
-            />
-
-            <button className="btn" onClick={() => this.fetchData(searchQuery)}>
-              Search
-            </button>
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="loader">Loading...</div>
-        ) : (
-          <div className="cards-container">{listItems}</div>
-        )}
       </div>
-    );
-  }
-}
+
+      {loading ? (
+        <div className="loader">Loading...</div>
+      ) : (
+        <div className="cards-container">
+          <div className="results" onClick={closeDetails}>
+            <div className="cards-list">
+              {result?.map((person) => <Card results={person}></Card>)}
+            </div>
+          </div>
+          {openDetails && (
+            <DetailedCard
+              name={getIdFromPath(pathname)}
+              onClick={closeDetails}
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Search;

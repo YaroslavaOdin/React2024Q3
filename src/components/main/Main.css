@@ -2,7 +2,8 @@
   box-sizing: border-box;
 }
 
-.title {
+.title,
+.not-found-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,14 +50,6 @@ button {
   font-weight: 500;
   font-size: 40px;
   margin-top: 100px;
-}
-
-.cards-container {
-  height: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  margin: 20px;
 }
 
 .card {

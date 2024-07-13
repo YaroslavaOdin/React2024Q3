@@ -52,22 +52,35 @@ button {
 }
 
 .cards-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.results {
+  width: 100%;
+  background: #ebf5ff;
+  margin-top: 30px;
+  padding-left: 20px;
+}
+
+.cards-list {
   height: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin: 20px;
+  padding-bottom: 30px;
 }
 
 .card {
-  width: 200px;
-  height: 150px;
+  width: 150px;
+  height: 120px;
   color: #003468;
-  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   margin-right: 25px;
   margin-top: 25px;
   border-radius: 2px;
   padding: 15px 10px;
+  background: white;
 }
 
 .card_info {
