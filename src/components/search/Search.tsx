@@ -86,7 +86,7 @@ const Search = () => {
   };
 
   return (
-    <div>
+    <div data-testid="main">
       <button className="error-btn" onClick={throwNewError}>
         Test error
       </button>
