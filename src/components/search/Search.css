@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+input {
+  width: 400px;
+  height: 35px;
+  padding-left: 10px;
+  border: 1px solid #161616;
+  border-radius: 5px;
+  outline: none;
+  background: #ffffff;
+  color: #9e9c9c;
+  margin-right: 20px;
+}
+
+button {
+  width: 140px;
+  height: 35px;
+  border: none;
+  background: #003468;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.search-container {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  font-weight: 500;
+  font-size: 40px;
+  margin-top: 100px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.results {
+  width: 100%;
+  background: #ebf5ff;
+  margin-top: 30px;
+  padding-left: 20px;
+}
+
+.cards-list {
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding-bottom: 30px;
+}
+
+.card {
+  width: 150px;
+  height: 120px;
+  color: #003468;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  margin-right: 25px;
+  margin-top: 25px;
+  border-radius: 2px;
+  padding: 15px 10px;
+  background: white;
+}
+
+.card_info {
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
