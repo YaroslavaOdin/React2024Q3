@@ -29,13 +29,14 @@ const Search = () => {
   }, []);
 
   useEffect(() => {
-    if (getIdFromPath(pathname) !== "/") {
+    if (pathname.includes("star-trek-character")) {
       setOpenDetails(true);
     }
   }, [pathname]);
 
   useEffect(() => {
     fetchData(page);
+    navigate(`/search/page${page + 1}`);
   }, [page]);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ const Search = () => {
     if (!openDetails) return;
     setOpenDetails(false);
 
-    navigate(`/`);
+    navigate(`/search/page${page + 1}`);
   };
 
   return (

@@ -17,6 +17,7 @@ const Main = () => {
               }
             />
           </Route>
+          <Route path="/search/:pagenumber" element={<Search />} />
           <Route
             path="*"
             element={<div className="not-found-page"> 404 Not Found </div>}
