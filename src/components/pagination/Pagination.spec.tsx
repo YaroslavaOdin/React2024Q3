@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import Pagination from "./Pagination.tsx";
+import Pagination from "./Pagination";
 
 describe("React component: Pagination", () => {
   it('The "onPrevPageClick" handler should be called when the back button is clicked.', () => {

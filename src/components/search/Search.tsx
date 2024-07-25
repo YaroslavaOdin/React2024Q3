@@ -1,20 +1,18 @@
 import "./Search.css";
 import { useEffect, useState } from "react";
-import Card from "../card-list/Card";
 import { Character } from "../../utils/model";
 import { useLocation, useNavigate } from "react-router-dom";
-import DetailedCard from "../detailed-card/DetailedCard";
+import DetailedCard from "../DetailedCard/DetailedCard";
 import { getIdFromPath, getSearchData } from "../../utils/utils";
-import Pagination from "../pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 import { LocalStorage } from "../../utils/local-storage";
+import CardList from "../CardList/CardList";
+import ErrorBtn from "../ErrorBtn/ErrorBtn";
+import SearchInput from "../SearchInput/SearchInput";
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState<string>(
-    LocalStorage().getItem(),
-  );
   const [result, setResult] = useState<Character[]>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [hasError, setHasError] = useState<boolean>(false);
   const [openDetails, setOpenDetails] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -25,7 +23,7 @@ const Search = () => {
   const [pathname, setPathname] = useState(location.pathname);
 
   useEffect(() => {
-    fetchData(0);
+    fetchData(0, LocalStorage().getItem());
   }, []);
 
   useEffect(() => {
@@ -35,7 +33,7 @@ const Search = () => {
   }, [pathname]);
 
   useEffect(() => {
-    fetchData(page);
+    fetchData(page, LocalStorage().getItem());
     navigate(`/search/page${page + 1}`);
   }, [page]);
 
@@ -43,20 +41,16 @@ const Search = () => {
     setPathname(location.pathname);
   }, [location.pathname]);
 
-  const fetchData = async (page: number) => {
+  const fetchData = async (page: number, query: string) => {
     setLoading(true);
-    LocalStorage().setItem(searchQuery);
+    LocalStorage().setItem(query);
 
-    const result = await getSearchData(searchQuery, page);
+    const result = await getSearchData(query, page);
 
     setResult(result.characters);
     setTotalPages(result.totalPages);
     setPage(page);
     setLoading(false);
-  };
-
-  const throwNewError = () => {
-    setHasError(true);
   };
 
   const handleNextPageClick = async () => {
@@ -74,10 +68,6 @@ const Search = () => {
     setPage(prev >= 0 ? prev : current);
   };
 
-  if (hasError) {
-    throw new Error("Something went wrong.");
-  }
-
   const closeDetails = () => {
     if (!openDetails) return;
     setOpenDetails(false);
@@ -87,25 +77,10 @@ const Search = () => {
 
   return (
     <div data-testid="main">
-      <button className="error-btn" onClick={throwNewError}>
-        Test error
-      </button>
+      <ErrorBtn />
 
       <div className="title">Search for Star Trek characters</div>
-      <div className="search-container">
-        <div className="input">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Start search..."
-          />
-
-          <button className="btn" onClick={() => fetchData(0)}>
-            Search
-          </button>
-        </div>
-      </div>
+      <SearchInput onSearchBtnClick={fetchData} />
 
       {loading ? (
         <div className="loader">Loading...</div>
@@ -118,9 +93,7 @@ const Search = () => {
 
             {result && result?.length > 0 && (
               <div>
-                <div className="cards-list">
-                  {result?.map((person) => <Card results={person}></Card>)}
-                </div>
+                <CardList result={result} />
 
                 <div className="pagination">
                   <Pagination

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./DetailedCard.css";
 import { Character } from "../../utils/model";
+import { getCharacterInfo, getDetailedInfo } from "../../utils/utils";
 
 const DetailedCard = (props: { name: string; onClick: () => void }) => {
   const [result, setResult] = useState<Character[]>();
@@ -12,23 +13,10 @@ const DetailedCard = (props: { name: string; onClick: () => void }) => {
 
   const fetchData = async () => {
     setLoading(true);
-    const url = "https://stapi.co/api/v1/rest/character/search";
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        accept: "application/json",
-      },
-      body: `name=${decodeURI(props.name)}`,
-    };
-
-    await fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setLoading(false);
-        setResult(result.characters || []);
-      });
+    const result = await getCharacterInfo(props.name);
+    setLoading(false);
+    setResult(result || []);
   };
 
   if (loading) {
@@ -54,30 +42,30 @@ const DetailedCard = (props: { name: string; onClick: () => void }) => {
       placeOfBirth,
       maritalStatus,
     } = result[0];
-    const noData: string = "Not known";
+
     return (
       <div className="cards-details-section">
         <h1 className="title">Detailed information about the character</h1>
         <div className="details-container">
-          <b className="card_details">Name: {name ? name : noData}</b>
-          <span className="card_details">Uid: {uid ? uid : noData}</span>
+          <b className="card_details">Name: {getDetailedInfo(name)}</b>
+          <span className="card_details">Uid: {getDetailedInfo(uid)}</span>
           <span className="card_details">
-            Gender: {gender ? gender : noData}
+            Gender: {getDetailedInfo(gender)}
           </span>
           <span className="card_details">
-            Year of birth: {yearOfBirth ? yearOfBirth : noData}
+            Year of birth: {getDetailedInfo(yearOfBirth)}
           </span>
           <span className="card_details">
-            Month of birth: {monthOfBirth ? monthOfBirth : noData}
+            Month of birth: {getDetailedInfo(monthOfBirth)}
           </span>
           <span className="card_details">
-            Day of birth: {dayOfBirth ? dayOfBirth : noData}
+            Day of birth: {getDetailedInfo(dayOfBirth)}
           </span>
           <span className="card_details">
-            Place of birth: {placeOfBirth ? placeOfBirth : noData}
+            Place of birth: {getDetailedInfo(placeOfBirth)}
           </span>
           <span className="card_details">
-            Marital status: {maritalStatus ? maritalStatus : noData}
+            Marital status: {getDetailedInfo(maritalStatus)}
           </span>
         </div>
 

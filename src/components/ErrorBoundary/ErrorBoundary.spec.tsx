@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import ErrorBoundary from "./Error";
+import ErrorBoundary from "./ErrorBoundary";
 
 describe("ErrorBoundary Component", () => {
   it("should render children when there is no error", () => {

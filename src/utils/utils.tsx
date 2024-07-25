@@ -1,4 +1,4 @@
-import { Result } from "./model";
+import { Character, Result } from "./model";
 
 export const URL = "https://stapi.co/api/v1/rest/character/search";
 
@@ -20,10 +20,7 @@ export const getSearchData = async (
     body: `name=${searchQuery}`,
   };
 
-  return await fetch(
-    `https://stapi.co/api/v1/rest/character/search?pageNumber=${pageNumber}`,
-    requestOptions,
-  )
+  return await fetch(`${URL}?pageNumber=${pageNumber}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       return {
@@ -31,4 +28,26 @@ export const getSearchData = async (
         totalPages: result.page.totalPages,
       };
     });
+};
+
+export const getCharacterInfo = async (name: string): Promise<Character[]> => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      accept: "application/json",
+    },
+    body: `name=${decodeURI(name)}`,
+  };
+
+  return await fetch(`${URL}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      return result.characters;
+    });
+};
+
+export const getDetailedInfo = (info: string | number): string | number => {
+  const noData: string = "Not known";
+  return info ? info : noData;
 };
