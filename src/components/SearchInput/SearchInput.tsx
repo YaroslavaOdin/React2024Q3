@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { LocalStorage } from "../../utils/local-storage";
+import useLocalStorage from "../../utils/local-storage";
 
 type SearchInputProps = {
-  onSearchBtnClick: (page: number, query: string) => void;
+  onSearchBtnClick: (query: string) => void;
 };
 
 const SearchInput = (props: SearchInputProps) => {
   const { onSearchBtnClick } = props;
-  const [searchQuery, setSearchQuery] = useState<string>(
-    LocalStorage().getItem(),
-  );
+  const [query] = useLocalStorage("search-value", "");
+  const [searchQuery, setSearchQuery] = useState<string>(query);
 
-  const fetchData = (page: number, query: string) => {
-    onSearchBtnClick(page, query);
+  const fetchData = (query: string) => {
+    onSearchBtnClick(query);
   };
 
   return (
@@ -25,7 +24,7 @@ const SearchInput = (props: SearchInputProps) => {
           placeholder="Start search..."
         />
 
-        <button className="btn" onClick={() => fetchData(0, searchQuery)}>
+        <button className="btn" onClick={() => fetchData(searchQuery)}>
           Search
         </button>
       </div>

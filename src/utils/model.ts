@@ -12,5 +12,7 @@ export interface Character {
 
 export interface Result {
   characters: Character[];
-  totalPages: number;
+  page: {
+    totalPages: number;
+  };
 }

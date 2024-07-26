@@ -3,28 +3,44 @@ import { useEffect, useState } from "react";
 import { Character } from "../../utils/model";
 import { useLocation, useNavigate } from "react-router-dom";
 import DetailedCard from "../DetailedCard/DetailedCard";
-import { getIdFromPath, getSearchData } from "../../utils/utils";
+import { getIdFromPath } from "../../utils/utils";
 import Pagination from "../Pagination/Pagination";
-import { LocalStorage } from "../../utils/local-storage";
+import useLocalStorage from "../../utils/local-storage";
 import CardList from "../CardList/CardList";
 import ErrorBtn from "../ErrorBtn/ErrorBtn";
 import SearchInput from "../SearchInput/SearchInput";
+import { stApi } from "../../api/starTrekApi";
 
 const Search = () => {
   const [result, setResult] = useState<Character[]>();
-  const [loading, setLoading] = useState<boolean>(true);
   const [openDetails, setOpenDetails] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useLocalStorage("search-value", "");
 
   const navigate = useNavigate();
 
   const location = useLocation();
   const [pathname, setPathname] = useState(location.pathname);
 
-  useEffect(() => {
-    fetchData(0, LocalStorage().getItem());
-  }, []);
+  // eslint-disable-next-line react-compiler/react-compiler
+  const getCharacterByName = stApi.endpoints.getCharacterByName.useQuery;
+  // eslint-disable-next-line react-compiler/react-compiler
+  const getCharactersByPage = stApi.endpoints.getCharactersByPage.useQuery;
+
+  const {
+    data: dataByPage,
+    isLoading: isLoadingByPage,
+    isFetching: isFetchingByPage,
+    // eslint-disable-next-line react-compiler/react-compiler
+  } = getCharactersByPage(`${page} ${query}`);
+
+  const {
+    data: dataByName,
+    isLoading: isLoadingByName,
+    isFetching: isFetchingByName,
+    // eslint-disable-next-line react-compiler/react-compiler
+  } = getCharacterByName(query);
 
   useEffect(() => {
     if (pathname.includes("star-trek-character")) {
@@ -33,24 +49,27 @@ const Search = () => {
   }, [pathname]);
 
   useEffect(() => {
-    fetchData(page, LocalStorage().getItem());
-    navigate(`/search/page${page + 1}`);
-  }, [page]);
-
-  useEffect(() => {
     setPathname(location.pathname);
   }, [location.pathname]);
 
-  const fetchData = async (page: number, query: string) => {
-    setLoading(true);
-    LocalStorage().setItem(query);
+  useEffect(() => {
+    if (dataByPage) {
+      setResult(dataByPage?.characters);
+      setTotalPages(dataByPage?.page?.totalPages || 0);
+      setPage(page);
+    }
+  }, [dataByPage]);
 
-    const result = await getSearchData(query, page);
+  useEffect(() => {
+    if (dataByName) {
+      setResult(dataByName?.characters);
+      setTotalPages(dataByName?.page?.totalPages || 0);
+      setPage(0);
+    }
+  }, [dataByName]);
 
-    setResult(result.characters);
-    setTotalPages(result.totalPages);
-    setPage(page);
-    setLoading(false);
+  const onSearchBtnClick = (query: string): void => {
+    setQuery(query);
   };
 
   const handleNextPageClick = async () => {
@@ -80,9 +99,12 @@ const Search = () => {
       <ErrorBtn />
 
       <div className="title">Search for Star Trek characters</div>
-      <SearchInput onSearchBtnClick={fetchData} />
+      <SearchInput onSearchBtnClick={onSearchBtnClick} />
 
-      {loading ? (
+      {isLoadingByPage ||
+      isLoadingByName ||
+      isFetchingByPage ||
+      isFetchingByName ? (
         <div className="loader">Loading...</div>
       ) : (
         <div className="cards-container">
