@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import "./ErrorBoundary.css";
+import ThemeContext from "../../theme-context/themeContext";
 
 interface DefaultState {
   hasError: boolean;
@@ -26,15 +27,19 @@ class ErrorBoundary extends React.Component {
 
     if (hasError) {
       return (
-        <div className="error-container">
-          <h1 className="error_text">Something went wrong.</h1>
-          <button
-            className="error_button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again
-          </button>
-        </div>
+        <ThemeContext.Consumer>
+          {({ theme }) => (
+            <div className={`theme-${theme} error-container`}>
+              <h1 className="error_text">Something went wrong.</h1>
+              <button
+                className="error_button"
+                onClick={() => this.setState({ hasError: false })}
+              >
+                Try again
+              </button>
+            </div>
+          )}
+        </ThemeContext.Consumer>
       );
     }
     return children;

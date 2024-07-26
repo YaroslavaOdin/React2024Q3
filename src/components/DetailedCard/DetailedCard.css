@@ -28,3 +28,14 @@
   font-weight: 500;
   font-size: 40px;
 }
+
+.theme-dark .cards-details-section,
+.theme-dark .no-details,
+.theme-dark .loader-detail {
+  border-left: 1px solid #d5d5d5;
+}
+
+.theme-dark .card_details,
+.theme-dark .loader-details {
+  color: white;
+}

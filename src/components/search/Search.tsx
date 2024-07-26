@@ -10,6 +10,8 @@ import CardList from "../CardList/CardList";
 import ErrorBtn from "../ErrorBtn/ErrorBtn";
 import SearchInput from "../SearchInput/SearchInput";
 import { stApi } from "../../api/starTrekApi";
+import ThemeBtn from "../ThemeBtn/ThemeBtn";
+import ThemeContext from "../../theme-context/themeContext";
 
 const Search = () => {
   const [result, setResult] = useState<Character[]>();
@@ -95,48 +97,53 @@ const Search = () => {
   };
 
   return (
-    <div data-testid="main">
-      <ErrorBtn />
+    <ThemeContext.Consumer>
+      {({ theme }) => (
+        <div data-testid="main" className={`theme-${theme}`}>
+          <ErrorBtn />
+          <ThemeBtn />
 
-      <div className="title">Search for Star Trek characters</div>
-      <SearchInput onSearchBtnClick={onSearchBtnClick} />
+          <div className="title">Search for Star Trek characters</div>
+          <SearchInput onSearchBtnClick={onSearchBtnClick} />
 
-      {isLoadingByPage ||
-      isLoadingByName ||
-      isFetchingByPage ||
-      isFetchingByName ? (
-        <div className="loader">Loading...</div>
-      ) : (
-        <div className="cards-container">
-          <div className="results" onClick={closeDetails}>
-            {result && result?.length === 0 && (
-              <div className="not-found-page"> No Results </div>
-            )}
+          {isLoadingByPage ||
+          isLoadingByName ||
+          isFetchingByPage ||
+          isFetchingByName ? (
+            <div className="loader">Loading...</div>
+          ) : (
+            <div className="cards-container">
+              <div className="results" onClick={closeDetails}>
+                {result && result?.length === 0 && (
+                  <div className="not-found-page"> No Results </div>
+                )}
 
-            {result && result?.length > 0 && (
-              <div>
-                <CardList result={result} />
+                {result && result?.length > 0 && (
+                  <div>
+                    <CardList result={result} />
 
-                <div className="pagination">
-                  <Pagination
-                    onNextPageClick={handleNextPageClick}
-                    onPrevPageClick={handlePrevPageClick}
-                    nav={{ current: page, total: totalPages }}
-                  />
-                </div>
+                    <div className="pagination">
+                      <Pagination
+                        onNextPageClick={handleNextPageClick}
+                        onPrevPageClick={handlePrevPageClick}
+                        nav={{ current: page, total: totalPages }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {openDetails && (
-            <DetailedCard
-              name={getIdFromPath(pathname)}
-              onClick={closeDetails}
-            />
+              {openDetails && (
+                <DetailedCard
+                  name={getIdFromPath(pathname)}
+                  onClick={closeDetails}
+                />
+              )}
+            </div>
           )}
         </div>
       )}
-    </div>
+    </ThemeContext.Consumer>
   );
 };
 

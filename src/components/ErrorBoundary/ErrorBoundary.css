@@ -12,3 +12,11 @@
   font-weight: 600;
   font-size: 40px;
 }
+
+.theme-dark .error_text {
+  color: white;
+}
+
+.theme-dark .error-container {
+  background: #161616;
+}

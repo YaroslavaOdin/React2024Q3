@@ -58,7 +58,6 @@ button {
 
 .results {
   width: 100%;
-  background: #ebf5ff;
   margin-top: 30px;
   padding-left: 20px;
 }
@@ -86,4 +85,34 @@ button {
   color: #003468;
   margin-top: 20px;
   padding-bottom: 30px;
+}
+
+.theme-dark {
+  background: #161616;
+}
+
+.theme-dark .input {
+  border: 1px solid #161616;
+  background: #161616;
+  color: #353535;
+}
+
+.theme-dark button {
+  color: white;
+  background: rgb(0, 130, 223);
+}
+
+.theme-dark .card {
+  color: #ffffff;
+  box-shadow: 1px 1px 5px rgba(67, 67, 67, 0.2);
+  background: rgb(63, 63, 63);
+}
+
+.theme-dark .card_info,
+.theme-dark .error_text,
+.theme-dark .navigation,
+.theme-dark .pagination,
+.theme-dark .loader,
+.theme-dark .title {
+  color: #ffffff;
 }

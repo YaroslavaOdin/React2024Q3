@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Character {
   uid: number;
   name: string;
@@ -15,4 +17,13 @@ export interface Result {
   page: {
     totalPages: number;
   };
+}
+
+export interface ThemeContextType {
+  theme: string;
+  changeTheme: () => void;
+}
+
+export interface ThemeProps {
+  children: ReactNode;
 }
