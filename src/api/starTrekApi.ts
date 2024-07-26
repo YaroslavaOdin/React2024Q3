@@ -33,5 +33,17 @@ export const stApi = createApi({
       }),
       keepUnusedDataFor: 1,
     }),
+    getCharacterInfo: builder.query<Result, string>({
+      query: (name: string) => ({
+        url: `${URL}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          accept: "application/json",
+        },
+        body: `name=${decodeURI(name)}`,
+      }),
+      keepUnusedDataFor: 1,
+    }),
   }),
 });
