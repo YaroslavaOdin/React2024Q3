@@ -1,5 +1,6 @@
-import { describe, it, expect, Mock, vi, beforeEach } from "vitest";
-import { getIdFromPath, getSearchData } from "./utils";
+import { describe, it, expect } from "vitest";
+import { csvmaker, getDetailedInfo, getIdFromPath } from "./utils";
+import { Character } from "./model";
 
 describe("getIdFromPath", () => {
   it("should extract the ID from the path", () => {
@@ -21,40 +22,46 @@ describe("getIdFromPath", () => {
   });
 });
 
-describe("getSearchData", () => {
-  beforeEach(() => {
-    vi.resetAllMocks();
+describe("getDetailedInfo", () => {
+  it("should return given info", () => {
+    expect(getDetailedInfo("Test Name")).toBe("Test Name");
+    expect(getDetailedInfo(42)).toBe(42);
   });
 
-  it("should return characters and totalPages from the API response", async () => {
-    const mockResponse = {
-      characters: [{ name: "Kirk" }, { name: "Spock" }],
-      page: { totalPages: 5 },
-    };
+  it('should return "Not known" if info is empty', () => {
+    expect(getDetailedInfo("")).toBe("Not known");
+  });
+});
 
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      }),
-    ) as Mock;
-
-    const result = await getSearchData("Kirk", 1);
-
-    expect(result).toEqual({
-      characters: mockResponse.characters,
-      totalPages: mockResponse.page.totalPages,
-    });
-
-    expect(fetch).toHaveBeenCalledWith(
-      "https://stapi.co/api/v1/rest/character/search?pageNumber=1",
+describe("csvmaker", () => {
+  it("should create CSV from character array", () => {
+    const data: Character[] = [
       {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          accept: "application/json",
-        },
-        body: "name=Kirk",
+        uid: 1,
+        name: "Character 1",
+        gender: "Male",
+        yearOfBirth: "",
+        yearOfDeath: "",
+        monthOfBirth: "",
+        dayOfBirth: "",
+        placeOfBirth: "",
+        maritalStatus: "",
       },
-    );
+      {
+        uid: 2,
+        name: "Character 2",
+        gender: "Female",
+        yearOfBirth: "",
+        yearOfDeath: "",
+        monthOfBirth: "",
+        dayOfBirth: "",
+        placeOfBirth: "",
+        maritalStatus: "",
+      },
+    ];
+    const csvOutput = csvmaker(data);
+    expect(csvOutput).toMatch(/uid,name,gender/);
+    expect(csvOutput).toMatch(/1,Character 1,Male/);
+    expect(csvOutput).toMatch(/2,Character 2,Female/);
   });
 });

@@ -10,7 +10,7 @@ export const getDetailedInfo = (info: string | number): string | number => {
   return info ? info : noData;
 };
 
-const csvmaker = (data: Character[]) => {
+export const csvmaker = (data: Character[]) => {
   const keys = Object.keys(data[0]);
   const values = [];
   values.push(keys);
@@ -24,7 +24,7 @@ const csvmaker = (data: Character[]) => {
   return result;
 };
 
-const download = (data: string) => {
+export const download = (data: string) => {
   const blob = new Blob([data], { type: "text/csv;charset=utf-8," });
   return URL.createObjectURL(blob);
 };

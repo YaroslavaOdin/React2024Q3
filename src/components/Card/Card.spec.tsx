@@ -1,10 +1,11 @@
-import "@testing-library/jest-dom/extend-expect";
-import { render } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import Card from "./Card.tsx";
+import { Provider } from "react-redux";
+import { describe, expect, test } from "vitest";
+import Card from "./Card";
+import { render, screen } from "@testing-library/react";
+import store from "../../redux/store";
 import { BrowserRouter } from "react-router-dom";
 
-const mockCharacter = {
+const results = {
   uid: 1,
   name: "Deela",
   gender: "M",
@@ -16,15 +17,17 @@ const mockCharacter = {
   maritalStatus: "",
 };
 
-describe("Card Component", () => {
-  it("should render character name and gender", () => {
-    const { getByText } = render(
+describe("Test Card Component", () => {
+  test("renders the Card component", () => {
+    render(
       <BrowserRouter>
-        <Card results={mockCharacter} />
+        <Provider store={store}>
+          <Card results={results} />
+        </Provider>
+        ,
       </BrowserRouter>,
     );
-
-    expect(getByText(/Deela/i)).toBeInTheDocument();
-    expect(getByText(/Gender: M/i)).toBeInTheDocument();
+    expect(screen.getByText("Deela")).toBeDefined();
+    expect(screen.getByText("Gender: M")).toBeDefined();
   });
 });

@@ -47,7 +47,7 @@ const DetailedCard = (props: { name: string; onClick: () => void }) => {
     return (
       <ThemeContext.Consumer>
         {({ theme }) => (
-          <div>
+          <div data-testid="detailed-card">
             {isLoadingByInfo || isFetchingByInfo ? (
               <div className="loader">Loading...</div>
             ) : (

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DetailedCard from "../DetailedCard/DetailedCard";
 import { getIdFromPath } from "../../utils/utils";
 import Pagination from "../Pagination/Pagination";
-import useLocalStorage from "../hooks/local-storage";
+import useLocalStorage from "../../hooks/local-storage";
 import CardList from "../CardList/CardList";
 import ErrorBtn from "../ErrorBtn/ErrorBtn";
 import SearchInput from "../SearchInput/SearchInput";
