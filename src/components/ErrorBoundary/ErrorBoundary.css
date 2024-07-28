@@ -1,0 +1,22 @@
+.error-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.error_text {
+  color: #003468;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+.theme-dark .error_text {
+  color: white;
+}
+
+.theme-dark .error-container {
+  background: #161616;
+}

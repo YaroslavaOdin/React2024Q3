@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root,
+.main-block {
+  height: 100vh;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+input {
+  width: 400px;
+  height: 35px;
+  padding-left: 10px;
+  border: 1px solid #161616;
+  border-radius: 5px;
+  outline: none;
+  background: #ffffff;
+  color: #9e9c9c;
+  margin-right: 20px;
+}
+
+button {
+  width: 140px;
+  height: 35px;
+  border: none;
+  background: #003468;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.search-container {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  font-weight: 500;
+  font-size: 40px;
+  margin-top: 100px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  max-height: 80%;
+}
+
+.results {
+  width: 100%;
+  margin-top: 30px;
+  padding-left: 20px;
+  overflow: auto;
+}
+
+.card {
+  width: 190px;
+  height: 140px;
+  color: #003468;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  margin-right: 25px;
+  margin-top: 25px;
+  border-radius: 2px;
+  padding: 15px 10px;
+  background: white;
+}
+
+.card_info {
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003468;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+
+.theme-dark {
+  background: #1c1c1c;
+}
+
+.theme-dark .input {
+  border: 1px solid #1c1c1c;
+  background: #1c1c1c;
+  color: #353535;
+}
+
+.theme-dark button {
+  color: white;
+  background: rgb(0, 130, 223);
+}
+
+.theme-dark .card,
+.theme-dark .flyout {
+  color: #ffffff;
+  box-shadow: 1px 1px 5px rgba(67, 67, 67, 0.2);
+  background: rgb(63, 63, 63);
+}
+
+.theme-dark .card_info,
+.theme-dark .error_text,
+.theme-dark .navigation,
+.theme-dark .pagination,
+.theme-dark .loader,
+.theme-dark .title,
+.theme-dark .flyout-text {
+  color: #ffffff;
+}
+
+.theme-dark .select-card-btn {
+  background: rgb(0, 140, 19);
+}
+
+.theme-dark .unselect-card-btn {
+  background: rgb(140, 0, 0);
+}
