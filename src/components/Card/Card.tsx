@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectItem, unselectItem } from "../../redux/reducer";
 
 const Card = (props: { results: Character }) => {
-  const { uid, name, gender } = props.results;
+  const { uid, name } = props.results;
 
   const dispatch = useDispatch();
   const selectedItems = useSelector(
@@ -18,14 +18,13 @@ const Card = (props: { results: Character }) => {
 
   return (
     <div key={uid} className="card" data-testid="card">
-      <b className="card_info">{name}</b>
-      <span className="card_info">Gender: {gender}</span>
+      <b className="card_info card_name">{name}</b>
       <Link to={`/star-trek-character/details=${name}`}>
-        <div className="card_info">Learn more...</div>
+        <div className="card_info card_link">Learn more...</div>
       </Link>
       {isCardSelected(uid) ? (
         <button
-          className="select-card-btn"
+          className="unselect-card-btn"
           onClick={(): unknown => dispatch(unselectItem(props.results))}
         >
           Unselect Card

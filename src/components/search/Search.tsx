@@ -100,7 +100,7 @@ const Search = () => {
   return (
     <ThemeContext.Consumer>
       {({ theme }) => (
-        <div data-testid="main" className={`theme-${theme}`}>
+        <div data-testid="main" className={`theme-${theme} main-block`}>
           <ErrorBtn />
           <ThemeBtn />
           <Flyout />
