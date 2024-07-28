@@ -1,0 +1,24 @@
+.flyout {
+  background: white;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  z-index: 1;
+}
+
+.flyout-text {
+  color: #003468;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.flyout-unselet-btn {
+  margin-left: 10px;
+}
+
+.flyout-link {
+  display: inline-block;
+  height: 35px;
+}

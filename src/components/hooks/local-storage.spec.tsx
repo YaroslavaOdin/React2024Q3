@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 import { beforeEach, describe, expect, it } from "vitest";
-import { LocalStorage } from "./local-storage.tsx";
+import { LocalStorage } from "../components/hooks/local-storage.tsx";
 
 describe("LocalStorage Component", () => {
   beforeEach(() => {

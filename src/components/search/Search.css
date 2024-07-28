@@ -63,8 +63,8 @@ button {
 }
 
 .card {
-  width: 150px;
-  height: 120px;
+  width: 170px;
+  height: 150px;
   color: #003468;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   margin-right: 25px;
@@ -88,12 +88,12 @@ button {
 }
 
 .theme-dark {
-  background: #161616;
+  background: #1c1c1c;
 }
 
 .theme-dark .input {
-  border: 1px solid #161616;
-  background: #161616;
+  border: 1px solid #1c1c1c;
+  background: #1c1c1c;
   color: #353535;
 }
 
@@ -102,7 +102,8 @@ button {
   background: rgb(0, 130, 223);
 }
 
-.theme-dark .card {
+.theme-dark .card,
+.theme-dark .flyout {
   color: #ffffff;
   box-shadow: 1px 1px 5px rgba(67, 67, 67, 0.2);
   background: rgb(63, 63, 63);
@@ -113,6 +114,7 @@ button {
 .theme-dark .navigation,
 .theme-dark .pagination,
 .theme-dark .loader,
-.theme-dark .title {
+.theme-dark .title,
+.theme-dark .flyout-text {
   color: #ffffff;
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useLocalStorage from "../../utils/local-storage";
+import useLocalStorage from "../hooks/local-storage";
 
 type SearchInputProps = {
   onSearchBtnClick: (query: string) => void;

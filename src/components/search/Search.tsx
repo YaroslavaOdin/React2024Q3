@@ -5,13 +5,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DetailedCard from "../DetailedCard/DetailedCard";
 import { getIdFromPath } from "../../utils/utils";
 import Pagination from "../Pagination/Pagination";
-import useLocalStorage from "../../utils/local-storage";
+import useLocalStorage from "../hooks/local-storage";
 import CardList from "../CardList/CardList";
 import ErrorBtn from "../ErrorBtn/ErrorBtn";
 import SearchInput from "../SearchInput/SearchInput";
 import { stApi } from "../../api/starTrekApi";
 import ThemeBtn from "../ThemeBtn/ThemeBtn";
 import ThemeContext from "../../theme-context/themeContext";
+import Flyout from "../Flyout/Flyout";
 
 const Search = () => {
   const [result, setResult] = useState<Character[]>();
@@ -102,6 +103,7 @@ const Search = () => {
         <div data-testid="main" className={`theme-${theme}`}>
           <ErrorBtn />
           <ThemeBtn />
+          <Flyout />
 
           <div className="title">Search for Star Trek characters</div>
           <SearchInput onSearchBtnClick={onSearchBtnClick} />

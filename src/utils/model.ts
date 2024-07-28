@@ -27,3 +27,9 @@ export interface ThemeContextType {
 export interface ThemeProps {
   children: ReactNode;
 }
+
+export interface StoreReducer {
+  selectedItems: {
+    selectedItems: Character[];
+  };
+}
