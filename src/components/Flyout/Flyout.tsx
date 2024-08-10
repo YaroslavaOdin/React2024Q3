@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StoreReducer } from "../../utils/model";
 import { unselectAllItems } from "../../redux/reducer";
-import "./Flyout.css";
 import { createCsvLink } from "../../utils/utils";
 
 export default function Flyout(): JSX.Element | null {

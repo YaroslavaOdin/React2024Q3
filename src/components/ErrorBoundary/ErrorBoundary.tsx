@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import "./ErrorBoundary.css";
 import ThemeContext from "../../theme-context/themeContext";
+import styles from "../../styles/errorBoundary.module.css";
 
 interface DefaultState {
   hasError: boolean;
@@ -29,8 +29,8 @@ class ErrorBoundary extends React.Component {
       return (
         <ThemeContext.Consumer>
           {({ theme }) => (
-            <div className={`theme-${theme} error-container`}>
-              <h1 className="error_text">Something went wrong.</h1>
+            <div className={`theme-${theme} ${styles.errorContainer}`}>
+              <h1 className={styles.errorText}>Something went wrong.</h1>
               <button
                 className="error_button"
                 onClick={() => this.setState({ hasError: false })}

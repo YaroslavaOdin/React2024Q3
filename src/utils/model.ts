@@ -33,3 +33,36 @@ export interface StoreReducer {
     selectedItems: Character[];
   };
 }
+
+export interface IResponse {
+  dataFromServer: {
+    characters: Character[];
+    page: {
+      pageNumber: number;
+      pageSize: number;
+      numberOfElements: number;
+      totalElements: number;
+      totalPages: number;
+      firstPage: boolean;
+      lastPage: boolean;
+    };
+    sort: {
+      clauses: string[];
+    };
+  },
+  dataByIdFromServer: {
+    characters: Character[];
+    page: {
+      pageNumber: number;
+      pageSize: number;
+      numberOfElements: number;
+      totalElements: number;
+      totalPages: number;
+      firstPage: boolean;
+      lastPage: boolean;
+    };
+    sort: {
+      clauses: string[];
+    };
+  };
+}

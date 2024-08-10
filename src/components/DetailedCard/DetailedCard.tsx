@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
-import "./DetailedCard.css";
 import { Character } from "../../utils/model";
 import { getDetailedInfo } from "../../utils/utils";
-import { stApi } from "../../api/starTrekApi";
 import ThemeContext from "../../theme-context/themeContext";
+import { Router } from "next/router";
 
-const DetailedCard = (props: { name: string; onClick: () => void }) => {
-  const [result, setResult] = useState<Character[]>();
-
-  // eslint-disable-next-line react-compiler/react-compiler
-  const getCharacterInfo = stApi.endpoints.getCharacterInfo.useQuery;
-
-  const {
-    data: dataByInfo,
-    isLoading: isLoadingByInfo,
-    isFetching: isFetchingByInfo,
-    // eslint-disable-next-line react-compiler/react-compiler
-  } = getCharacterInfo(props.name);
+const DetailedCard = (props: { character: Character; onClick: () => void }) => {
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (dataByInfo) {
-      setResult(dataByInfo?.characters);
-    }
-  }, [dataByInfo]);
+    const start = () => {
+      setLoading(true);
+    };
+    const end = () => {
+      setLoading(false);
+    };
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
+    return () => {
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
+  }, []);
 
-  if (result && result.length === 0) {
+  if (!props.character) {
     return (
       <div className="no-details">
         <h1 className="title">No character data available.</h1>
@@ -32,7 +32,7 @@ const DetailedCard = (props: { name: string; onClick: () => void }) => {
     );
   }
 
-  if (result) {
+  if (props.character) {
     const {
       uid,
       name,
@@ -42,13 +42,13 @@ const DetailedCard = (props: { name: string; onClick: () => void }) => {
       dayOfBirth,
       placeOfBirth,
       maritalStatus,
-    } = result[0];
+    } = props.character;
 
     return (
       <ThemeContext.Consumer>
         {({ theme }) => (
           <div data-testid="detailed-card">
-            {isLoadingByInfo || isFetchingByInfo ? (
+            {isLoading ? (
               <div className="loader">Loading...</div>
             ) : (
               <div className={`theme-${theme} cards-details-section`}>

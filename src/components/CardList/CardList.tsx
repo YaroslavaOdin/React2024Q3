@@ -1,13 +1,12 @@
 import { Character } from "../../utils/model";
 import Card from "../Card/Card";
-import "./CardList.css";
 
-const CardList = (props: { result: Character[] }) => {
+export default function CardList(props: { result: Character[], search: string }): JSX.Element {
   return (
     <div className="cards-list">
-      {props.result?.map((person) => <Card results={person}></Card>)}
+      {props.result?.map((person) => (
+        <Card key={person.uid} results={person} search={props.search}></Card>
+      ))}
     </div>
   );
-};
-
-export default CardList;
+}

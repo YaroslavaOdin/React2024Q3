@@ -1,4 +1,4 @@
-.error-container {
+.errorContainer {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -6,17 +6,17 @@
   justify-content: center;
 }
 
-.error_text {
+.errorText {
   color: #003468;
   margin-top: 20px;
   font-weight: 600;
   font-size: 40px;
 }
 
-.theme-dark .error_text {
+.theme-dark .errorText {
   color: white;
 }
 
-.theme-dark .error-container {
+.theme-dark .errorContainer {
   background: #161616;
 }

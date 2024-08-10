@@ -1,6 +1,5 @@
 import React from "react";
 import ThemeContext from "../../theme-context/themeContext";
-import "./ThemeBtn.css";
 
 const ThemeBtn: React.FC = () => {
   return (
