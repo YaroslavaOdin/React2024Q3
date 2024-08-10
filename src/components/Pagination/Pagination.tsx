@@ -1,23 +1,20 @@
-//import "./Pagination.css";
-
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 type PaginationProps = {
   onNextPageClick: () => void;
   onPrevPageClick: () => void;
-  nav?: {
-    current: number;
-    total: number;
-  };
   search: string;
+  pageData: {
+    page: number;
+    totalPages: number;
+  };
 };
 
 const Pagination = (props: PaginationProps) => {
-  const { nav = null, onNextPageClick, onPrevPageClick, search } = props;
+  const { onNextPageClick, onPrevPageClick, search, pageData } = props;
 
-  const router = useRouter();
-  const page = router.query.page;
+  const disablePrev = pageData.page === 0;
+  const disableNext = pageData.page === pageData.totalPages - 1;
 
   const handleNextPageClick = () => {
     onNextPageClick();
@@ -31,29 +28,29 @@ const Pagination = (props: PaginationProps) => {
   };
 
   const getNextPage = (page: number): number => {
-    return nav && page < nav.total ? page + 1 : page;
+    return page !== pageData.totalPages ? page + 1 : page;
   };
 
   return (
     <div className="paginator">
       <Link
-        href={`/?search=${search}&page=${getPrevPage(Number(page))}`}
+        href={`/?search=${search}&page=${getPrevPage(Number(pageData.page))}`}
         legacyBehavior
       >
-        <button className="arrow" type="button" onClick={handlePrevPageClick}>
+        <button className="arrow" type="button" onClick={handlePrevPageClick} disabled={disablePrev}>
           {"<"}
         </button>
       </Link>
-      {nav && (
+      {pageData && (
         <span className="navigation">
-          {Number(page)} / {nav.total}
+          {Number(pageData.page)} / [{pageData.totalPages}]
         </span>
       )}
       <Link
-        href={`/?search=${search}&page=${getNextPage(Number(page))}`}
+        href={`/?search=${search}&page=${getNextPage(Number(pageData.page))}`}
         legacyBehavior
       >
-        <button className="arrow" type="button" onClick={handleNextPageClick}>
+        <button className="arrow" type="button" onClick={handleNextPageClick} disabled={disableNext}>
           {">"}
         </button>
       </Link>

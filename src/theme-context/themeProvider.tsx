@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import ThemeContext from "./themeContext";
 import { defaultTheme, themeDark, themeLight } from "./constants";

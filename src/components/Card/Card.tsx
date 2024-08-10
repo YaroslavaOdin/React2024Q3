@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { Character, StoreReducer } from "../../utils/model";
 import { selectItem, unselectItem } from "../../redux/reducer";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Card(props: { results: Character, search: string }): JSX.Element {
+export default function Card(props: {
+  results: Character;
+  search: string;
+  page: number;
+}): JSX.Element {
   const { uid, name } = props.results;
 
   const dispatch = useDispatch();
-  const router = useRouter();
-  const page = router.query.page;
-
   const selectedItems = useSelector(
     (state: StoreReducer) => state.selectedItems.selectedItems,
   );
@@ -22,7 +22,9 @@ export default function Card(props: { results: Character, search: string }): JSX
   return (
     <div key={uid} className="card" data-testid="card">
       <b className="card_info card_name">{name}</b>
-      <Link href={`/character/${name}?search=${props.search}&page=${Number(page)}`}>
+      <Link
+        href={`/character/${encodeURI(name)}?search=${props.search}&page=${props.page}`}
+      >
         <div className="card_info card_link">Learn more...</div>
       </Link>
       {isCardSelected(uid) ? (

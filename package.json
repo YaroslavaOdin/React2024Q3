@@ -25,6 +25,7 @@
     "*.{ts,tsx}": "eslint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.6.0",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-router-dom": "^5.3.3",
     "next": "^14.2.5",
@@ -46,6 +47,7 @@
     "@vitest/coverage-v8": "^2.0.2",
     "c8": "^10.1.2",
     "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
