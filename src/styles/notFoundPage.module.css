@@ -1,0 +1,7 @@
+.notFoundPage {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(131, 0, 0);
+}
