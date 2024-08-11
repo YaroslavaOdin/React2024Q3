@@ -4,7 +4,10 @@ import { selectItem, unselectItem } from "../../redux/reducer";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Card(props: { results: Character, search: string }): JSX.Element {
+export default function Card(props: {
+  results: Character;
+  search: string;
+}): JSX.Element {
   const { uid, name } = props.results;
 
   const dispatch = useDispatch();
@@ -22,11 +25,14 @@ export default function Card(props: { results: Character, search: string }): JSX
   return (
     <div key={uid} className="card" data-testid="card">
       <b className="card_info card_name">{name}</b>
-      <Link href={`/character/${name}?search=${props.search}&page=${Number(page)}`}>
+      <Link
+        href={`/character/${name}?search=${props.search}&page=${Number(page)}`}
+      >
         <div className="card_info card_link">Learn more...</div>
       </Link>
       {isCardSelected(uid) ? (
         <button
+        data-testid="unselect-card-btn"
           className="unselect-card-btn"
           onClick={(): unknown => dispatch(unselectItem(props.results))}
         >
@@ -34,6 +40,7 @@ export default function Card(props: { results: Character, search: string }): JSX
         </button>
       ) : (
         <button
+          data-testid="select-card-btn"
           className="select-card-btn"
           onClick={(): unknown => dispatch(selectItem(props.results))}
         >

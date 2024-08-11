@@ -24,7 +24,7 @@ const DetailedCard = (props: { character: Character; onClick: () => void }) => {
     };
   }, []);
 
-  if (!props.character) {
+  if (!props.character || props.character?.name === '') {
     return (
       <div className="no-details">
         <h1 className="title">No character data available.</h1>

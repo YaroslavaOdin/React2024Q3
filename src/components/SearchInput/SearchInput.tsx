@@ -22,6 +22,7 @@ const SearchInput = (props: SearchInputProps) => {
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
           placeholder="Start search..."
+          data-testid="search-input"
         />
 
         <button className="btn" onClick={() => fetchData(searchQuery)}>

@@ -7,7 +7,6 @@ import ThemeBtn from "../ThemeBtn/ThemeBtn";
 import { IResponse } from "../../utils/model";
 import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import globalStyles from "../../styles/global";
 import CardList from "../CardList/CardList";
 import Pagination from "../Pagination/Pagination";
 import DetailedCard from "../DetailedCard/DetailedCard";
@@ -69,7 +68,7 @@ export default function MainPage(dataFromServer: IResponse): JSX.Element {
   };
 
   const closeDetails = () => {
-    if(searchCharacter) {
+    if (searchCharacter) {
       router.replace(`/?search=${inputValue}&page=${page}`);
     }
   };
@@ -114,16 +113,13 @@ export default function MainPage(dataFromServer: IResponse): JSX.Element {
 
               {searchCharacter && (
                 <DetailedCard
+                  data-testid="detailed-card"
                   character={searchCharacter}
                   onClick={closeDetails}
                 />
               )}
             </div>
           )}
-
-          <style jsx global>
-            {globalStyles}
-          </style>
         </div>
       )}
     </ThemeContext.Consumer>

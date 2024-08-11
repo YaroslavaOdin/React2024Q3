@@ -14,15 +14,15 @@ export const getServerSideProps = (async ({ query }) => {
   let dataFromServerResult, dataFromServer;
   if (query?.search) {
     dataFromServerResult = await fetch(
-        `https://stapi.co/api/v1/rest/character/search?pageNumber=${query.page || 0}&pageSize=50`,
-        requestOptions,
-      );
-      dataFromServer = await dataFromServerResult.json();
+      `https://stapi.co/api/v1/rest/character/search?pageNumber=${query.page || 0}&pageSize=50`,
+      requestOptions,
+    );
+    dataFromServer = await dataFromServerResult.json();
   } else {
     dataFromServerResult = await fetch(
-        `https://stapi.co/api/v1/rest/character/search?pageNumber=${query.page || 0}&pageSize=50`
-      );
-      dataFromServer = await dataFromServerResult.json();
+      `https://stapi.co/api/v1/rest/character/search?pageNumber=${query.page || 0}&pageSize=50`,
+    );
+    dataFromServer = await dataFromServerResult.json();
   }
 
   const requestOptionsForCharacter = {
@@ -36,12 +36,12 @@ export const getServerSideProps = (async ({ query }) => {
 
   const dataByIdFromServerResult = await fetch(
     `https://stapi.co/api/v1/rest/character/search`,
-    requestOptionsForCharacter
+    requestOptionsForCharacter,
   );
   const dataByIdFromServer: Character[] = await dataByIdFromServerResult.json();
 
   return { props: { dataFromServer, dataByIdFromServer } };
-}) satisfies GetServerSideProps<{dataFromServer: IResponse}>;
+}) satisfies GetServerSideProps<{ dataFromServer: IResponse }>;
 
 export default function DetailsPage(dataFromServer: IResponse): JSX.Element {
   return (

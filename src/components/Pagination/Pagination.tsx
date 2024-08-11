@@ -1,5 +1,3 @@
-//import "./Pagination.css";
-
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -46,7 +44,7 @@ const Pagination = (props: PaginationProps) => {
       </Link>
       {nav && (
         <span className="navigation">
-          {Number(page)} / {nav.total}
+          {Number(page)} / [{nav.total - 1 || 1}]
         </span>
       )}
       <Link

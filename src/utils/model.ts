@@ -49,7 +49,7 @@ export interface IResponse {
     sort: {
       clauses: string[];
     };
-  },
+  };
   dataByIdFromServer: {
     characters: Character[];
     page: {

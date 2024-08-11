@@ -14,7 +14,7 @@ export default function Flyout(): JSX.Element | null {
   }
 
   return (
-    <div className="flyout">
+    <div className="flyout" data-testid="flyout">
       <div className="flyout-text">
         There are currently {selectedItems?.length} items selected
       </div>
