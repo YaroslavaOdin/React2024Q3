@@ -1,5 +1,11 @@
-import { describe, it, expect } from "vitest";
-import { csvmaker, getDetailedInfo, getIdFromPath } from "./utils";
+import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
+import {
+  csvmaker,
+  getCharacterDetails,
+  getCharacters,
+  getDetailedInfo,
+  getIdFromPath,
+} from "./utils";
 import { Character } from "./model";
 
 describe("getIdFromPath", () => {
@@ -63,5 +69,90 @@ describe("csvmaker", () => {
     expect(csvOutput).toMatch(/uid,name,gender/);
     expect(csvOutput).toMatch(/1,Character 1,Male/);
     expect(csvOutput).toMatch(/2,Character 2,Female/);
+  });
+});
+
+describe("getCharacters", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  it("should return characters and totalPages from the API response", async () => {
+    const mockResponse = {
+      characters: [{ name: "Kirk" }, { name: "Spock" }],
+    };
+
+    global.fetch = vi.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockResponse),
+      }),
+    ) as Mock;
+
+    const result = await getCharacters(1, "Kirk");
+
+    expect(result).toEqual({
+      characters: mockResponse.characters,
+    });
+
+    expect(fetch).toHaveBeenCalledWith(
+      "https://stapi.co/api/v1/rest/character/search?pageNumber=1&pageSize=50",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          accept: "application/json",
+        },
+        body: "name=Kirk",
+      },
+    );
+  });
+});
+
+describe("getCharacterDetails", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  it("should return characters and totalPages from the API response", async () => {
+    const mockResponse = {
+      dataFromServer: {
+        characters: [{ name: "Kirk" }],
+      },
+      dataByIdFromServer: {
+        characters: [{ name: "Kirk" }],
+      },
+    };
+
+    const response = {
+      dataFromServer: {
+        dataFromServer: { characters: [{ name: "Kirk" }] },
+        dataByIdFromServer: { characters: [{ name: "Kirk" }] },
+      },
+      dataByIdFromServer: {
+        dataFromServer: { characters: [{ name: "Kirk" }] },
+        dataByIdFromServer: { characters: [{ name: "Kirk" }] },
+      },
+    };
+
+    global.fetch = vi.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockResponse),
+      }),
+    ) as Mock;
+
+    const result = await getCharacterDetails(1, "K", "Kirk");
+    expect(result).toEqual(response);
+
+    expect(fetch).toHaveBeenCalledWith(
+      "https://stapi.co/api/v1/rest/character/search",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          accept: "application/json",
+        },
+        body: "name=Kirk",
+      },
+    );
   });
 });

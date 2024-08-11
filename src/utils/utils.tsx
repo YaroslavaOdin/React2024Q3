@@ -1,4 +1,3 @@
-import { cache } from "react";
 import { Character, IResponse } from "./model";
 
 export const getIdFromPath = (path: string) => {
@@ -35,7 +34,11 @@ export const createCsvLink = (selectedItems: Character[]) => {
   return download(csvdata);
 };
 
-export const getCharacterDetails = cache(async (page = 0, search = '', name: unknown) => {
+export const getCharacterDetails = async (
+  page = 0,
+  search = "",
+  name: unknown,
+) => {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -47,15 +50,15 @@ export const getCharacterDetails = cache(async (page = 0, search = '', name: unk
   let dataFromServerResult, dataFromServer;
   if (search) {
     dataFromServerResult = await fetch(
-        `https://stapi.co/api/v1/rest/character/search?pageNumber=${page || 0}&pageSize=50`,
-        requestOptions,
-      );
-      dataFromServer = await dataFromServerResult.json();
+      `https://stapi.co/api/v1/rest/character/search?pageNumber=${page || 0}&pageSize=50`,
+      requestOptions,
+    );
+    dataFromServer = await dataFromServerResult.json();
   } else {
     dataFromServerResult = await fetch(
-        `https://stapi.co/api/v1/rest/character/search?pageNumber=${page || 0}&pageSize=50`
-      );
-      dataFromServer = await dataFromServerResult.json();
+      `https://stapi.co/api/v1/rest/character/search?pageNumber=${page || 0}&pageSize=50`,
+    );
+    dataFromServer = await dataFromServerResult.json();
   }
 
   const requestOptionsForCharacter = {
@@ -69,14 +72,14 @@ export const getCharacterDetails = cache(async (page = 0, search = '', name: unk
 
   const dataByIdFromServerResult = await fetch(
     `https://stapi.co/api/v1/rest/character/search`,
-    requestOptionsForCharacter
+    requestOptionsForCharacter,
   );
   const dataByIdFromServer: IResponse = await dataByIdFromServerResult.json();
 
   return { dataFromServer, dataByIdFromServer };
-});
+};
 
-export const getCharacters = cache(async (page: number, search = "") => {
+export const getCharacters = async (page: number, search = "") => {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -99,4 +102,4 @@ export const getCharacters = cache(async (page: number, search = "") => {
     dataFromServer = await result.json();
   }
   return dataFromServer;
-});
+};

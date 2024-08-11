@@ -37,7 +37,12 @@ const Pagination = (props: PaginationProps) => {
         href={`/?search=${search}&page=${getPrevPage(Number(pageData.page))}`}
         legacyBehavior
       >
-        <button className="arrow" type="button" onClick={handlePrevPageClick} disabled={disablePrev}>
+        <button
+          className="arrow"
+          type="button"
+          onClick={handlePrevPageClick}
+          disabled={disablePrev}
+        >
           {"<"}
         </button>
       </Link>
@@ -50,7 +55,12 @@ const Pagination = (props: PaginationProps) => {
         href={`/?search=${search}&page=${getNextPage(Number(pageData.page))}`}
         legacyBehavior
       >
-        <button className="arrow" type="button" onClick={handleNextPageClick} disabled={disableNext}>
+        <button
+          className="arrow"
+          type="button"
+          onClick={handleNextPageClick}
+          disabled={disableNext}
+        >
           {">"}
         </button>
       </Link>
