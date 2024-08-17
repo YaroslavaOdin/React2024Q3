@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { FormData } from "../utils/model";
 
 const initialState: FormData[] = [];
 
