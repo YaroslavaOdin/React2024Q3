@@ -7,9 +7,9 @@ export const UncontrolledFormDataSlice = createSlice({
   initialState,
   reducers: {
     addUncontrolledFormData: (state: FormData[], action) => {
-        const formData = action.payload;
-        state.push(formData);
-      },
+      const formData = action.payload;
+      state.push(formData);
+    },
   },
 });
 

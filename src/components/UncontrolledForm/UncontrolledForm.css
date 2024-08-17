@@ -1,0 +1,23 @@
+.uncontrolled-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.uncontrolled-form__label {
+  margin-right: 20px;
+}
+
+.proposed-countries {
+  position: absolute;
+}
+
+.proposed-countries__country {
+  height: 20px;
+  width: 100%;
+  padding: 3px 6px;
+  background: rgb(24, 24, 24);
+  border-bottom: 1px solid rgb(189, 189, 189);
+  cursor: pointer;
+}

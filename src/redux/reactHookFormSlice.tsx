@@ -6,12 +6,12 @@ export const ReactHookFormDataSlice = createSlice({
   name: "ReactHookFormData",
   initialState,
   reducers: {
-    addUncontrolledFormData: (state: FormData[], action) => {
-        const formData = action.payload;
-        state.push(formData);
-      },
+    addReactHookFormData: (state: FormData[], action) => {
+      const formData = action.payload;
+      state.push(formData);
+    },
   },
 });
 
-export const { addUncontrolledFormData } = ReactHookFormDataSlice.actions;
+export const { addReactHookFormData } = ReactHookFormDataSlice.actions;
 export default ReactHookFormDataSlice.reducer;

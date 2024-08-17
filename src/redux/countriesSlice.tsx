@@ -1,18 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { СOUNTRIES } from "../utils/countries.ts";
 
 const initialState = {
-  countries: [
-    "Belarus",
-    "Latvia",
-    "Lithuania",
-    "Ukraine",
-    "Poland",
-    "France",
-    "Germany",
-    "China",
-    "Japan",
-    "USA",
-  ],
+  countries: СOUNTRIES,
 };
 
 export const countriesSlice = createSlice({
