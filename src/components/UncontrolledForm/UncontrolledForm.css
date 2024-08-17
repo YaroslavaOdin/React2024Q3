@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.uncontrolled-form__input-container {
+  height: 50px;
+}
+
 .uncontrolled-form__label {
   margin-right: 20px;
 }
@@ -20,4 +24,10 @@
   background: rgb(24, 24, 24);
   border-bottom: 1px solid rgb(189, 189, 189);
   cursor: pointer;
+}
+
+.validation-form-error {
+  color: red;
+  position: absolute;
+  font-size: 10px;
 }
