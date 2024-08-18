@@ -31,3 +31,7 @@
   position: absolute;
   font-size: 10px;
 }
+
+.uncontrolled-form__password{
+  height: 70px;
+}

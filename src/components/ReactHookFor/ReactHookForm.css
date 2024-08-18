@@ -3,32 +3,35 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+}
   
-  .react-hook-form__input-container {
-    height: 50px;
-  }
+.react-hook-form__input-container {
+  height: 50px;
+}
   
-  .react-hook-form__label {
-    margin-right: 20px;
-  }
+.react-hook-form__label {
+  margin-right: 20px;
+}
   
-  .proposed-countries {
-    position: absolute;
-  }
+.proposed-countries {
+  position: absolute;
+}
   
-  .proposed-countries__country {
-    height: 20px;
-    width: 100%;
-    padding: 3px 6px;
-    background: rgb(24, 24, 24);
-    border-bottom: 1px solid rgb(189, 189, 189);
-    cursor: pointer;
-  }
+.proposed-countries__country {
+  height: 20px;
+  width: 100%;
+  padding: 3px 6px;
+  background: rgb(24, 24, 24);
+  border-bottom: 1px solid rgb(189, 189, 189);
+  cursor: pointer;
+}
   
-  .validation-form-error {
-    color: red;
-    position: absolute;
-    font-size: 10px;
-  }
+.validation-form-error {
+  color: red;
+  position: absolute;
+  font-size: 10px;
+}
   
+.react-hook-form__password {
+  height: 70px;
+}

@@ -6,8 +6,26 @@
 }
 
 .main-page__card {
+    max-width: 60%;
     margin: 20px;
     padding: 10px;
     background-color: rgb(40, 40, 40);
     border-radius: 5px;
+}
+
+.main-page__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page__uncontrolled-form-data, .main-page__react-hook-form-data {
+    max-width: 20%;
+    margin: 30px;
+}
+
+img {
+    display: inline-block;
+    max-width: 40%;
+    max-height: auto;
 }

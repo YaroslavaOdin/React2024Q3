@@ -25,7 +25,10 @@ const Main = () => {
         <div className="main-page__uncontrolled-form-data">
           <h6 className="link-title">Forms from uncontrolled form:</h6>
           <div className="main-page__card-list">
-            {uncontrolledFormData?.reverse()?.map((formData) => 
+            {uncontrolledFormData?.length === 0 && (
+              <div>No submited forms</div>
+            )}
+            {uncontrolledFormData?.map((formData) => 
               <div className="main-page__card">
                 <div>Name: {formData.name}</div>
                 <div>Age: {formData.age}</div>
@@ -43,7 +46,10 @@ const Main = () => {
         <div className="main-page__react-hook-form-data">
           <h6 className="link-title">Forms from react hook form:</h6>
           <div className="main-page__card-list">
-            {reactHookFormData?.reverse()?.map((formData) => 
+            {reactHookFormData?.length === 0 && (
+              <div>No submited forms</div>
+            )}
+            {reactHookFormData?.map((formData) => 
               <div className="main-page__card">
                 <div>Name: {formData.name}</div>
                 <div>Age: {formData.age}</div>
@@ -51,6 +57,7 @@ const Main = () => {
                 <div>Password: {formData.password}</div>
                 <div>Gender: {formData.gender}</div>
                 <div>Country: {formData.country}</div>
+                <div>Picture:</div>
                 <img src={formData.picture} alt="picture" />
               </div>
             )}

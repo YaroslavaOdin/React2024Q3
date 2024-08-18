@@ -28,6 +28,8 @@ const ReactHookForm = () => {
     useState<string[]>(countries);
   const [inputCountry, setInputCountry] = useState<string>("");
   const [isHideCountryList, setIsHideCountryList] = useState<boolean>(true);
+  const [password, setPassword] = useState("");
+  const [strength, setStrength] = useState("");
 
   const selectCountry = (country: string) => {
     setIsHideCountryList(true);
@@ -48,6 +50,35 @@ const ReactHookForm = () => {
     setProposedСountries(filtered);
     setInputCountry(value);
   };
+
+  const evaluatePasswordStrength = (password: string): string => {
+    let score = 0;
+    if (!password) {
+      return '';
+    }
+
+    if (password.length > 8) score += 1;
+
+    if (/[a-zа-яё]/.test(password)) score += 1;
+
+    if (/[A-ZА-ЯЁ]/.test(password)) score += 1;
+
+    if (/[0-9]/.test(password)) score += 1;
+
+    if (/[!"#$%&'()*+,-./:;<=>?@[^_`{|}~]/.test(password)) score += 1;
+
+    switch (score) {
+      case 0:
+      case 1:
+      case 2:
+      return "Weak";
+    case 3:
+    case 4:
+      return "Medium";
+    case 5:
+      return "Strong";
+    }
+  }
 
   const onSubmit = async (data: FormData) => {
     if(isValid) {
@@ -113,7 +144,7 @@ const ReactHookForm = () => {
           )}
         </div>
 
-        <div className="react-hook-form__input-container">
+        <div className="react-hook-form__input-container react-hook-form__password">
           <label htmlFor="password" className="react-hook-form__label">
             Password:
           </label>
@@ -122,7 +153,13 @@ const ReactHookForm = () => {
             id="password"
             {...register('password')}
             placeholder="Password"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+              setStrength(evaluatePasswordStrength(event.target.value));
+            }}
           />
+          <div>Password strength: {strength}</div>
           {errors.password && (
             <div className="react-hook-form-error">
               {errors.password.message}

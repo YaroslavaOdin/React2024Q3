@@ -30,6 +30,8 @@ const UncontrolledForm = () => {
   const [validationFormErrors, setvalidationFormErrors] = useState<{
     [key: string]: string;
   }>({});
+  const [password, setPassword] = useState("");
+  const [strength, setStrength] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -102,6 +104,35 @@ const UncontrolledForm = () => {
     setInputCountry(value);
   };
 
+  const evaluatePasswordStrength = (password: string): string => {
+    let score = 0;
+    if (!password) {
+      return '';
+    }
+
+    if (password.length > 8) score += 1;
+
+    if (/[a-zа-яё]/.test(password)) score += 1;
+
+    if (/[A-ZА-ЯЁ]/.test(password)) score += 1;
+
+    if (/[0-9]/.test(password)) score += 1;
+
+    if (/[!"#$%&'()*+,-./:;<=>?@[^_`{|}~]/.test(password)) score += 1;
+
+    switch (score) {
+      case 0:
+      case 1:
+      case 2:
+      return "Weak";
+    case 3:
+    case 4:
+      return "Medium";
+    case 5:
+      return "Strong";
+    }
+  }
+
   return (
     <div className="uncontrolled-form">
       <h1 className="uncontrolled-form__title">Uncontrolled Form</h1>
@@ -142,7 +173,7 @@ const UncontrolledForm = () => {
           )}
         </div>
 
-        <div className="uncontrolled-form__input-container">
+        <div className="uncontrolled-form__input-container uncontrolled-form__password">
           <label htmlFor="password" className="uncontrolled-form__label">
             Password:
           </label>
@@ -151,7 +182,13 @@ const UncontrolledForm = () => {
             id="password"
             ref={passwordRef}
             placeholder="Password"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+              setStrength(evaluatePasswordStrength(event.target.value));
+            }}
           />
+          <div>Password strength: {strength}</div>
           {validationFormErrors.password && (
             <div className="validation-form-error">
               {validationFormErrors.password}
