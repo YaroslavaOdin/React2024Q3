@@ -1,9 +1,9 @@
-import './Main.css';
+import './MainPage.css';
 import { useSelector } from "react-redux";
 import Header from "../Header/Header";
 import { FormData } from "../../utils/model";
 
-const Main = () => {
+const MainPage = () => {
   const uncontrolledFormData = useSelector(
     (state: { UncontrolledFormData: FormData[] }) =>
       state.UncontrolledFormData
@@ -92,4 +92,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPage;
