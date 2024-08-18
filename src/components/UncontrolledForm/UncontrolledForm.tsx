@@ -7,6 +7,7 @@ import { State } from "../../utils/model";
 import { toBase64 } from "../../utils/utils";
 import * as yup from "yup";
 import validationSchema from "../../yup-validation/yup-validation";
+import { addLastFormSubmittedData } from "../../redux/lastFormSubmittedSlive";
 
 const UncontrolledForm = () => {
   const navigate = useNavigate();
@@ -67,7 +68,21 @@ const UncontrolledForm = () => {
           agreement: agreementRef.current?.checked,
           picture: fileToBase64,
           country: countryRef.current?.value,
-        }),
+        })
+      );
+
+      dispatch(
+        addLastFormSubmittedData({
+          name: nameRef.current?.value,
+          age: ageRef.current?.value,
+          email: emailRef.current?.value,
+          password: passwordRef.current?.value,
+          confirmPassword: confirmPasswordRef.current?.value,
+          gender: genderRef.current?.value,
+          agreement: agreementRef.current?.checked,
+          picture: fileToBase64,
+          country: countryRef.current?.value,
+        })
       );
 
       navigate("/");
@@ -104,13 +119,17 @@ const UncontrolledForm = () => {
     setInputCountry(value);
   };
 
+  const focusSelectCountry = (): void => {
+    setIsHideCountryList(false);
+  }
+
   const evaluatePasswordStrength = (password: string): string => {
     let score = 0;
     if (!password) {
       return '';
     }
 
-    if (password.length > 8) score += 1;
+    if (password.length > 7) score += 1;
 
     if (/[a-zа-яё]/.test(password)) score += 1;
 
@@ -125,12 +144,12 @@ const UncontrolledForm = () => {
       case 1:
       case 2:
       return "Weak";
-    case 3:
-    case 4:
-      return "Medium";
-    case 5:
-      return "Strong";
-    }
+      case 3:
+      case 4:
+        return "Medium";
+      case 5:
+        return "Strong";
+      }
   }
 
   return (
@@ -267,7 +286,7 @@ const UncontrolledForm = () => {
             ref={countryRef}
             value={inputCountry}
             onChange={changeSelectCountry}
-            onFocus={changeSelectCountry}
+            onFocus={focusSelectCountry}
           />
           {validationFormErrors.country && (
             <div className="validation-form-error">

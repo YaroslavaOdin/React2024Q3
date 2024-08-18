@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { СOUNTRIES } from "../utils/countries.ts";
 
 const validationSchema = yup.object().shape({
   name: yup
@@ -59,7 +60,9 @@ const validationSchema = yup.object().shape({
       if (!value || !(value as File)?.size) return true;
       return (value as File)?.size <= 1080 * 1920;
     }),
-  country: yup.string().required("Country is required."),
+  country: yup.string()
+  .required("Country is required.")
+  .oneOf(СOUNTRIES, "Choose your country."),
 });
 
 export default validationSchema;

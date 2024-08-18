@@ -14,4 +14,5 @@ export interface State {
   ReactHookForm: [];
   UncontrolledFormData: [];
   countries: { countries: [] };
+  lastFormSubmitted: [];
 }

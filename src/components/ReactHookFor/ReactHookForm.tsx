@@ -9,6 +9,7 @@ import validationSchema from "../../yup-validation/yup-validation";
 import { addReactHookFormData } from "../../redux/reactHookFormSlice";
 import { toBase64 } from "../../utils/utils";
 import { FormData } from "../../utils/model";
+import { addLastFormSubmittedData } from '../../redux/lastFormSubmittedSlive';
 
 const ReactHookForm = () => {
   const navigate = useNavigate();
@@ -51,13 +52,17 @@ const ReactHookForm = () => {
     setInputCountry(value);
   };
 
+  const focusSelectCountry = (): void => {
+    setIsHideCountryList(false);
+  }
+
   const evaluatePasswordStrength = (password: string): string => {
     let score = 0;
     if (!password) {
       return '';
     }
 
-    if (password.length > 8) score += 1;
+    if (password.length > 7) score += 1;
 
     if (/[a-zа-яё]/.test(password)) score += 1;
 
@@ -72,18 +77,32 @@ const ReactHookForm = () => {
       case 1:
       case 2:
       return "Weak";
-    case 3:
-    case 4:
-      return "Medium";
-    case 5:
-      return "Strong";
-    }
+      case 3:
+      case 4:
+        return "Medium";
+      case 5:
+        return "Strong";
+      }
   }
 
   const onSubmit = async (data: FormData) => {
     if(isValid) {
       const file = (data.picture as unknown as FileList)[0]
       const fileToBase64 = file ? (await toBase64(file) as string) : "";
+
+      dispatch(
+        addLastFormSubmittedData({
+          name: data.name,
+          age: data.age,
+          email: data.email,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+          gender: data.gender,
+          agreement: data.agreement,
+          picture: fileToBase64,
+          country: inputCountry,
+        })
+      );
 
       dispatch(
         addReactHookFormData({
@@ -95,7 +114,7 @@ const ReactHookForm = () => {
           gender: data.gender,
           agreement: data.agreement,
           picture: fileToBase64,
-          country: data.country,
+          country: inputCountry,
         }),
       );
 
@@ -233,12 +252,13 @@ const ReactHookForm = () => {
             Country:
           </label>
           <input
+            id="country"
             placeholder="Country"
             type="search"
-            {...register('country')}
             value={inputCountry}
+            {...register("country")}
             onChange={changeSelectCountry}
-            onFocus={changeSelectCountry}
+            onFocus={focusSelectCountry}
           />
           {errors.country && (
             <div className="validation-form-error">
@@ -251,7 +271,7 @@ const ReactHookForm = () => {
           className="proposed-countries react-hook-form__input-container"
           style={{ display: isHideCountryList ? "none" : "block" }}
         >
-          <div id="country">
+          <div>
             {proposedСountries.map((country) => (
               <div
                 className="proposed-countries__country"

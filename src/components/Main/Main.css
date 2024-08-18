@@ -19,8 +19,8 @@
     align-items: center;
 }
 
-.main-page__uncontrolled-form-data, .main-page__react-hook-form-data {
-    max-width: 20%;
+.main-page__uncontrolled-form-data, .main-page__react-hook-form-data, .main-page__last-form-data {
+    max-width: 30%;
     margin: 30px;
 }
 
@@ -29,3 +29,17 @@ img {
     max-width: 40%;
     max-height: auto;
 }
+
+.last-submitted-form__card {
+    animation: ch-color-1 5s forwards;
+    border: 2px solid rgb(154, 154, 154);
+}
+
+@keyframes ch-color-1 {
+    from {
+      background-color: rgb(87, 87, 87);
+    }
+    to {
+      background-color: rgb(40, 40, 40);
+    }
+  }

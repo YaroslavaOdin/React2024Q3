@@ -10,11 +10,14 @@ const Main = () => {
   );
 
   const reactHookFormData = useSelector(
-    (state: { ReactHookFormData: FormData[] }) => {
-      console.log(state);
-      return state.ReactHookFormData
+    (state: { ReactHookFormData: FormData[] }) => 
+      state.ReactHookFormData
+  );
+
+  const lastFormSubmittedData = useSelector(
+    (state: { lastFormSubmitted: FormData[] }) => {
+      return state.lastFormSubmitted;
     }
-      
   );
 
   return (
@@ -22,8 +25,29 @@ const Main = () => {
       <Header />
       <h1 className="main-page__title">Form Data</h1>
       <div className="main-page__container">
+      <div className="main-page__last-form-data">
+          <h3 className="link-title">Last submitted form:</h3>
+          <div className="main-page__card-list">
+            {lastFormSubmittedData?.length === 0 && (
+              <div>No submited forms</div>
+            )}
+            {lastFormSubmittedData?.length > 0 && (
+              <div className="main-page__card last-submitted-form__card">
+              <div>Name: {lastFormSubmittedData[0].name}</div>
+              <div>Age: {lastFormSubmittedData[0].age}</div>
+              <div>Email: {lastFormSubmittedData[0].email}</div>
+              <div>Password: {lastFormSubmittedData[0].password}</div>
+              <div>Gender: {lastFormSubmittedData[0].gender}</div>
+              <div>Country: {lastFormSubmittedData[0].country}</div>
+              <div>Picture:</div>
+              <img src={lastFormSubmittedData[0].picture} alt="picture" />
+            </div>
+            )}
+          </div>
+        </div>
+        
         <div className="main-page__uncontrolled-form-data">
-          <h6 className="link-title">Forms from uncontrolled form:</h6>
+          <h3 className="link-title">Forms from uncontrolled form:</h3>
           <div className="main-page__card-list">
             {uncontrolledFormData?.length === 0 && (
               <div>No submited forms</div>
@@ -44,7 +68,7 @@ const Main = () => {
         </div>
 
         <div className="main-page__react-hook-form-data">
-          <h6 className="link-title">Forms from react hook form:</h6>
+          <h3 className="link-title">Forms from react hook form:</h3>
           <div className="main-page__card-list">
             {reactHookFormData?.length === 0 && (
               <div>No submited forms</div>
