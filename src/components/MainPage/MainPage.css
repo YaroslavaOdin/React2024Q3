@@ -1,0 +1,45 @@
+.main-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page__card {
+    max-width: 60%;
+    margin: 20px;
+    padding: 10px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 5px;
+}
+
+.main-page__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page__uncontrolled-form-data, .main-page__react-hook-form-data, .main-page__last-form-data {
+    max-width: 30%;
+    margin: 30px;
+}
+
+img {
+    display: inline-block;
+    max-width: 40%;
+    max-height: auto;
+}
+
+.last-submitted-form__card {
+    animation: ch-color-1 5s forwards;
+    border: 2px solid rgb(154, 154, 154);
+}
+
+@keyframes ch-color-1 {
+    from {
+      background-color: rgb(87, 87, 87);
+    }
+    to {
+      background-color: rgb(40, 40, 40);
+    }
+  }
