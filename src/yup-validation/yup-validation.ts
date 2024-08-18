@@ -45,8 +45,10 @@ const validationSchema = yup.object().shape({
       (files) => {
         let isValid = false;
         if (
-          (files as File).type === "image/jpeg" ||
-          (files as File).type === "image/png"
+          (files as File)?.type === "image/jpeg" ||
+          (files as File)?.type === "image/png" ||
+          (files[0] as File)?.type === "image/jpeg" ||
+          (files[0] as File)?.type === "image/png"
         ) {
           isValid = true;
         }
@@ -54,8 +56,8 @@ const validationSchema = yup.object().shape({
       },
     )
     .test("fileSize", "Max size can be 1080 * 1920.", (value) => {
-      if (!value || !(value as File).size) return true;
-      return (value as File).size <= 1080 * 1920;
+      if (!value || !(value as File)?.size) return true;
+      return (value as File)?.size <= 1080 * 1920;
     }),
   country: yup.string().required("Country is required."),
 });

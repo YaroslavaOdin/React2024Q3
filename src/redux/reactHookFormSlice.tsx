@@ -7,6 +7,7 @@ export const ReactHookFormDataSlice = createSlice({
   initialState,
   reducers: {
     addReactHookFormData: (state: FormData[], action) => {
+      console.log(action);
       const formData = action.payload;
       state.push(formData);
     },

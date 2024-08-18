@@ -6,7 +6,7 @@ import countryReducer from "./countriesSlice";
 const store = configureStore({
   reducer: {
     UncontrolledFormData: uncontrolledFormDataReducer,
-    ReactHookForm: reactHookFormReducer,
+    ReactHookFormData: reactHookFormReducer,
     countries: countryReducer,
   },
 });

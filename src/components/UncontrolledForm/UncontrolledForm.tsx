@@ -119,7 +119,7 @@ const UncontrolledForm = () => {
         </div>
 
         <div className="uncontrolled-form__input-container">
-          <label htmlFor="name" className="uncontrolled-form__label">
+          <label htmlFor="age" className="uncontrolled-form__label">
             Age:
           </label>
           <input id="age" type="number" ref={ageRef} placeholder="Age" />
@@ -211,7 +211,7 @@ const UncontrolledForm = () => {
             type="file"
             id="picture"
             ref={pictureRef}
-            accept=".png, .jpeg"
+            accept=".png, .jpg"
           />
           {validationFormErrors.picture && (
             <div className="validation-form-error">

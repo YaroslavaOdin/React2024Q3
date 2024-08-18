@@ -10,8 +10,11 @@ const Main = () => {
   );
 
   const reactHookFormData = useSelector(
-    (state: { reactHookFormData: FormData[] }) =>
-      state.reactHookFormData
+    (state: { ReactHookFormData: FormData[] }) => {
+      console.log(state);
+      return state.ReactHookFormData
+    }
+      
   );
 
   return (
